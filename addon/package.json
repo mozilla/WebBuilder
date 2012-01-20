@@ -1,0 +1,10 @@
+{
+	"license": "MPL 1.1/GPL 2.0/LGPL 2.1", 
+	"name": "web-builder-bootstrap",
+	"contributors": ["Daniel Buchner", "Arron Schaar", "Sean McArthur", "Piotr Zalewa"],
+	"author": "Daniel Buchner",
+	"version": "0.1",
+	"keywords": [],
+	"description": "Allows the Mozilla Web Builder to access priviledged APIs",
+	"id": "web-builder-bootstrap"
+}
