@@ -1,7 +1,8 @@
 
-
 exports.main = function(options, callbacks) {
 	var Window = require('window-utils'),
+		Widget = require('widget'),
+		Self = require('self'),
 		Prefs = require('preferences-service'),
 		windows = [],
 		builders = [],
@@ -10,8 +11,18 @@ exports.main = function(options, callbacks) {
 		
 	if (!Prefs.get(locationPref)) Prefs.set(locationPref, locationUrl);
 	
+	require('widget').Widget({
+		id: 'web-builder-widget',
+		label: 'Web Builder',
+		contentURL: Self.data.url('shortcut.png'),
+		onClick: function(){
+			builders.push(windows[0].open('about:blank', 'web-builder-chrome-window', 'width=600,height=600,resizable=yes,scrollbars=no,chrome=yes'));
+		}
+	});
+	
 	new Window.WindowTracker({
 		onTrack: function(window) {
+			windows.push(window);
 		
 			var document = window.document,
 				builderIndex = builders.indexOf(window),
@@ -47,10 +58,11 @@ exports.main = function(options, callbacks) {
 		onUntrack: function(window) {
 			var document = window.document,
 				index = windows.indexOf(window);
-			if (index != -1){
-				var menuItem = document.querySelector('#appmenu_webBuilder');
-				menuItem.parentElement.removeChild(menuItem);
-			}
+			
+			windows.splice(window, 1);
+			
+			var menuItem = document.querySelector('#appmenu_webBuilder');
+			if (menuItem) menuItem.parentElement.removeChild(menuItem);
 		}
 	});
 }
