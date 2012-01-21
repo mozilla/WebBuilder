@@ -4,8 +4,8 @@ exports.main = function(options, callbacks) {
 		Widget = require('widget'),
 		Self = require('self'),
 		Prefs = require('preferences-service'),
-		windows = [],
 		builders = [],
+		builderCount = 0,
 		locationPref = 'devtools.webbuilder.location',
 		locationUrl = Prefs.get(locationPref) || 'http://webbuilder.mozilla.org';
 		
@@ -16,14 +16,14 @@ exports.main = function(options, callbacks) {
 		label: 'Web Builder',
 		contentURL: Self.data.url('shortcut.png'),
 		onClick: function(){
-			builders.push(windows[0].open('about:blank', 'web-builder-chrome-window', 'width=600,height=600,resizable=yes,scrollbars=no,chrome=yes'));
+			var firefoxWindow;
+			for (window in Window.windowIterator()) openWindow = window;
+			builders.push(openWindow.open('about:blank', 'web-builder-chrome-window-' + builderCount++, 'width=600,height=600,resizable=yes,scrollbars=no,chrome=yes'));
 		}
 	});
 	
 	new Window.WindowTracker({
 		onTrack: function(window) {
-			windows.push(window);
-		
 			var document = window.document,
 				builderIndex = builders.indexOf(window),
 				menuItem = document.querySelector('#appmenu_errorConsole');
@@ -33,7 +33,7 @@ exports.main = function(options, callbacks) {
 					item.id = 'appmenu_webBuilder';
 					item.label = 'Web Builder';
 					item.addEventListener('click', function(e){
-						builders.push(window.open('about:blank', 'web-builder-chrome-window', 'width=600,height=600,resizable=yes,scrollbars=no,chrome=yes'));
+						builders.push(window.open('about:blank', 'web-builder-chrome-window-' + builderCount++, 'width=600,height=600,resizable=yes,scrollbars=no,chrome=yes'));
 					}, false);
 				
 				var label = document.createElement('xul:label');
@@ -57,11 +57,8 @@ exports.main = function(options, callbacks) {
 		},
 		onUntrack: function(window) {
 			var document = window.document,
-				index = windows.indexOf(window);
-			
-			windows.splice(window, 1);
-			
-			var menuItem = document.querySelector('#appmenu_webBuilder');
+				menuItem = document.querySelector('#appmenu_webBuilder');
+				
 			if (menuItem) menuItem.parentElement.removeChild(menuItem);
 		}
 	});
