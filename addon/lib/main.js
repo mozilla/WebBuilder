@@ -8,7 +8,7 @@ exports.main = function(options, callbacks) {
 		builders = [],
 		builderCount = 0,
 		locationPref = 'devtools.builder.location',
-		locationUrl = Prefs.get(locationPref) || 'http://builder.mozilla.org';
+		locationUrl = Prefs.get(locationPref) || 'http://builder.mozilla.org:1337';
 		
 	if (!Prefs.get(locationPref)) Prefs.set(locationPref, locationUrl);
 	
