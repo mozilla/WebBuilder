@@ -1,0 +1,10 @@
+node_modules/
+*.orig
+*.swp
+*.swo
+configuration/development.js
+configuration/production.js
+configuration/test.js
+public/css/*.css
+.DS_Store
+.settings.xml
