@@ -1,0 +1,3 @@
+[submodule "vendor/shipyard"]
+	path = vendor/shipyard
+	url = git://github.com/seanmonstar/Shipyard.git
