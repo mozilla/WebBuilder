@@ -1,0 +1,12 @@
+{
+	"name": "web-builder",
+	"description": "Offline/Online IDE",
+
+	"shipyard": {
+		"app": "./",
+		"mini_require": true,
+		"target": "../builder-min.js",
+		"min": false,
+		"test": "./tests"
+	}
+}
